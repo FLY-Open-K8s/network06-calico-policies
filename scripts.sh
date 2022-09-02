@@ -138,6 +138,19 @@ function cleanup(){
     kubectl delete namespace products-prod
 }
 
+#************************************************************************************************************************
+function delete_nodeport_demo_policies() {
+
+    calicoctl delete gnp allow-outbound-external
+    calicoctl delete gnp allow-cluster-internal-ingress-only.yaml
+    calicoctl delete HostEndpoint kube-master-eth0
+    calicoctl delete HostEndpoint kube-node1-eth0
+    calicoctl delete HostEndpoint kube-node2-eth0
+    calicoctl delete gnp allow-cluster-internal-ingress-only
+    calicoctl delete gnp allow-nodeport-30007
+
+}
+#************************************************************************************************************************
 
 #*************************************Calico NetworkPolicy: Deny Sample*****************************************************************
 setup_env
@@ -256,17 +269,5 @@ calicoctl apply -f allow-nodeport-30007.yaml
 delete_nodeport_demo_policies
 cleanup
 
-#************************************************************************************************************************
-function delete_nodeport_demo_policies() {
-    
-    calicoctl delete gnp allow-outbound-external
-    calicoctl delete gnp allow-cluster-internal-ingress-only.yaml
-    calicoctl delete HostEndpoint kube-master-eth0
-    calicoctl delete HostEndpoint kube-node1-eth0
-    calicoctl delete HostEndpoint kube-node2-eth0
-    calicoctl delete gnp allow-cluster-internal-ingress-only
-    calicoctl delete gnp allow-nodeport-30007
-  
-}
-#************************************************************************************************************************
+
 
